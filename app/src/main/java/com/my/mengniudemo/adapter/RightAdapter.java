@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,24 +60,63 @@ public class RightAdapter extends SectionedBaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final String name = cateBeanList.get(section).getList().get(position).getProductName();
-        holder.tv_product_name.setText(name);
-        holder.rl_right_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "" + name, Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        holder.tv_product_name.setText(cateBeanList.get(section)
+                .getList().get(position).getProductName());     //设置产品名称
+
+        OnClickListenerRightItem onClickListener = new OnClickListenerRightItem(section, position, holder);
+        holder.ll_right_list.setOnClickListener(onClickListener);
+        holder.iv_add_product.setOnClickListener(onClickListener);
+        holder.iv_remove_product.setOnClickListener(onClickListener);
         return convertView;
+    }
+
+    /**
+     * 点击事件实现类
+     */
+    private class OnClickListenerRightItem implements View.OnClickListener {
+
+        private int section;
+        private int position;
+        private ViewHolder holder;
+
+        private OnClickListenerRightItem(int section, int position, ViewHolder holder) {
+            this.section = section;
+            this.position = position;
+            this.holder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ll_right_list:
+                    Toast.makeText(context, "" + cateBeanList.get(section).getList().get(position).getProductName(), Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.iv_add_product:
+                    Toast.makeText(context, "添加商品", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.iv_remove_product:
+                    Toast.makeText(context, "移除商品", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
     }
 
     private class ViewHolder {
         TextView tv_product_name;
-        RelativeLayout rl_right_list;
+        LinearLayout ll_right_list;
+        ImageView iv_remove_product;
+        ImageView iv_add_product;
+        TextView tv_product_num;
 
         private ViewHolder(View convertView) {
             tv_product_name = (TextView) convertView.findViewById(R.id.tv_right_item);
-            rl_right_list = (RelativeLayout) convertView.findViewById(R.id.rl_right_list);
+            ll_right_list = (LinearLayout) convertView.findViewById(R.id.ll_right_list);
+            iv_remove_product = (ImageView) convertView.findViewById(R.id.iv_remove_product);
+            iv_add_product = (ImageView) convertView.findViewById(R.id.iv_add_product);
+            tv_product_num = (TextView) convertView.findViewById(R.id.tv_product_num);
         }
     }
 

@@ -6,10 +6,10 @@ package com.my.mengniudemo.bean;
  * Created by YJH on 2016/12/21 22:18.
  */
 
-public class ShoppingCartBean {
+public class ShopCartBean {
     private String name;
     private float price;
-    private int OrderNum;   //订购数量
+    private int buyNum;   //订购数量
 
     public String getName() {
         return name;
@@ -27,11 +27,11 @@ public class ShoppingCartBean {
         this.price = price;
     }
 
-    public int getOrderNum() {
-        return OrderNum;
+    public int getBuyNum() {
+        return buyNum;
     }
 
-    public void setOrderNum(int orderNum) {
-        OrderNum = orderNum;
+    public void setBuyNum(int buyNum) {
+        this.buyNum = buyNum;
     }
 }

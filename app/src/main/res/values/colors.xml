@@ -11,4 +11,5 @@
     <color name="gray">#888888</color>
     <color name="gray_2">#EEEEEE</color>
     <color name="gray_1">#EAEAEA</color>
+    <color name="line_color">#ECEDEF</color>
 </resources>

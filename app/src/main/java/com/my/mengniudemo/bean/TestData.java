@@ -217,4 +217,64 @@ public class TestData {
 
         return cateBeanList;
     }
+
+    public static List<ShopCartBean> setShopCartData() {
+        ShopCartBean bean0 = new ShopCartBean();
+        ShopCartBean bean1 = new ShopCartBean();
+        ShopCartBean bean2 = new ShopCartBean();
+        ShopCartBean bean3 = new ShopCartBean();
+        ShopCartBean bean4 = new ShopCartBean();
+        ShopCartBean bean5 = new ShopCartBean();
+        ShopCartBean bean6 = new ShopCartBean();
+        ShopCartBean bean7 = new ShopCartBean();
+        ShopCartBean bean8 = new ShopCartBean();
+        ShopCartBean bean9 = new ShopCartBean();
+
+        bean0.setBuyNum(8);
+        bean1.setBuyNum(6);
+        bean2.setBuyNum(4);
+        bean3.setBuyNum(88);
+        bean4.setBuyNum(9);
+        bean5.setBuyNum(8);
+        bean6.setBuyNum(7);
+        bean7.setBuyNum(2);
+        bean8.setBuyNum(66);
+        bean9.setBuyNum(12);
+
+        bean0.setName("蒙牛 纯甄 常温酸牛奶 200g*24 家庭装");
+        bean1.setName("特仑苏 醇纤牛奶 250ml*12盒 礼盒装");
+        bean2.setName("蒙牛 谷物早餐牛奶饮品250ml*12");
+        bean3.setName("蒙牛 精选牧场纯牛奶 250ml*12支优质牛奶");
+        bean4.setName("蒙牛新养道 零乳糖牛奶（低脂型）250ml*12盒礼盒装");
+        bean5.setName("蒙牛 纯甄 常温酸牛奶 200g*12盒");
+        bean6.setName("蒙牛红谷谷粒早餐牛奶饮品250ml*12盒");
+        bean7.setName("特仑苏 醇纤牛奶 250ml*12盒 礼盒装");
+        bean8.setName("伊利 味可滋香蕉牛奶240ml*12盒/礼盒装");
+        bean9.setName("蒙牛 特仑苏纯牛奶 250ml*16盒");
+
+        bean0.setPrice(21);
+        bean1.setPrice(5);
+        bean2.setPrice(8);
+        bean3.setPrice(52);
+        bean4.setPrice(90);
+        bean5.setPrice(56);
+        bean6.setPrice(90);
+        bean7.setPrice(66);
+        bean8.setPrice(18);
+        bean9.setPrice(6);
+
+        List<ShopCartBean> list = new ArrayList<>();
+        list.add(bean0);
+        list.add(bean1);
+        list.add(bean2);
+        list.add(bean3);
+        list.add(bean4);
+        list.add(bean5);
+        list.add(bean6);
+        list.add(bean7);
+        list.add(bean8);
+        list.add(bean9);
+
+        return list;
+    }
 }
