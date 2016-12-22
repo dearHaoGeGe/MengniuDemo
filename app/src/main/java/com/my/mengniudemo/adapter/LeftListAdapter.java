@@ -70,9 +70,11 @@ public class LeftListAdapter extends BaseAdapter {
             CategoryBean bean = data.get(position);
             left_list_item.setText(bean.getTypeName());
             if (bean.isFlag()) {
-                left_list_item.setBackgroundColor(Color.rgb(255, 255, 255));  //白色
+                left_list_item.setTextColor(context.getResources().getColor(R.color.black));
+                left_list_item.setBackgroundResource(R.drawable.left_stroke);
             } else {
-                left_list_item.setBackgroundColor(Color.TRANSPARENT);   //透明色
+                left_list_item.setTextColor(context.getResources().getColor(R.color.gray));
+                left_list_item.setBackgroundResource(0);
             }
         }
     }

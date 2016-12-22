@@ -23,14 +23,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
-            android:divider="@null"
             android:scrollbars="none" />
 
         <com.my.mengniudemo.view.PinnedHeaderListView
             android:id="@+id/pinnedListView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_3"
             android:layout_weight="4" />
     </LinearLayout>
 
