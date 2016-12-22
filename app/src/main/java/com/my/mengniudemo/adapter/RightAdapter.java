@@ -52,36 +52,56 @@ public class RightAdapter extends SectionedBaseAdapter {
 
     @Override
     public View getItemView(int section, int position, View convertView, ViewGroup parent) {
-        RelativeLayout layout = null;
+        ViewHolder holder = null;
         if (null == convertView) {
-            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            layout = (RelativeLayout) inflater.inflate(R.layout.right_list_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.right_list_item, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         } else {
-            layout = (RelativeLayout) convertView;
+            holder = (ViewHolder) convertView.getTag();
         }
-        TextView tv = (TextView) layout.findViewById(R.id.tv_right_item);
         final String name = cateBeanList.get(section).getList().get(position).getProductName();
-        tv.setText(name);
-        layout.setOnClickListener(new View.OnClickListener() {
+        holder.tv_product_name.setText(name);
+        holder.rl_right_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "" + name, Toast.LENGTH_SHORT).show();
             }
         });
-        return layout;
+        return convertView;
+    }
+
+    private class ViewHolder {
+        TextView tv_product_name;
+        RelativeLayout rl_right_list;
+
+        private ViewHolder(View convertView) {
+            tv_product_name = (TextView) convertView.findViewById(R.id.tv_right_item);
+            rl_right_list = (RelativeLayout) convertView.findViewById(R.id.rl_right_list);
+        }
     }
 
     @Override
     public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
-        LinearLayout layout = null;
+        HeaderViewHolder holder = null;
         if (null == convertView) {
-            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            layout = (LinearLayout) inflater.inflate(R.layout.header_item, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.header_item, parent, false);
+            holder = new HeaderViewHolder(convertView);
+            convertView.setTag(holder);
         } else {
-            layout = (LinearLayout) convertView;
+            holder = (HeaderViewHolder) convertView.getTag();
         }
-        layout.setClickable(false);
-        ((TextView) layout.findViewById(R.id.tv_right_header_item)).setText(cateBeanList.get(section).getTypeName()+"("+cateBeanList.get(section).getList().size()+")");
-        return layout;
+        holder.tv_right_header_item.setText(cateBeanList.get(section).getTypeName() + "(" + cateBeanList.get(section).getList().size() + ")");
+        return convertView;
+    }
+
+    private class HeaderViewHolder {
+        LinearLayout ll_right_header;
+        TextView tv_right_header_item;
+
+        private HeaderViewHolder(View convertView) {
+            ll_right_header = (LinearLayout) convertView.findViewById(R.id.ll_right_header);
+            tv_right_header_item = (TextView) convertView.findViewById(R.id.tv_right_header_item);
+        }
     }
 }
