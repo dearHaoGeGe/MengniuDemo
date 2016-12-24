@@ -20,11 +20,12 @@ import com.my.mengniudemo.adapter.LeftListAdapter;
 import com.my.mengniudemo.adapter.RightAdapter;
 import com.my.mengniudemo.adapter.ShopCartAdapter;
 import com.my.mengniudemo.bean.CategoryBean;
-import com.my.mengniudemo.bean.ShopCartBean;
+import com.my.mengniudemo.bean.ProductBean;
 import com.my.mengniudemo.bean.TestData;
 import com.my.mengniudemo.view.MyListView;
 import com.my.mengniudemo.view.PinnedHeaderListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnClickListener {
@@ -43,8 +44,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private BottomSheetLayout bottomSheetLayout;
     private View bottomSheet;
     private LinearLayout ll_shopcar;
+    public TextView tv_total_num;
     private ShopCartAdapter shopCartAdapter;
-    private List<ShopCartBean> carList;
+    private List<ProductBean> carList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initPinnedHeaderListView() {
         pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
-        rightAdapter = new RightAdapter(this, cateBeanList);
+        rightAdapter = new RightAdapter(this, cateBeanList, leftAdapter);
         pinnedListView.setAdapter(rightAdapter);
         pinnedListView.setOnScrollListener(this);
     }
@@ -132,11 +134,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void initBottomLayout() {
         ll_shopcar = (LinearLayout) findViewById(R.id.ll_shopcar);
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
+        tv_total_num = (TextView) findViewById(R.id.tv_total_num);
         ll_shopcar.setOnClickListener(this);
-        carList=TestData.setShopCartData();
+        carList = TestData.setShopCartData();
+//        carList=new ArrayList<>();
+        tv_total_num.setVisibility(tv_total_num.getText().equals("0") ? View.INVISIBLE : View.VISIBLE);
     }
 
-    //创建购物车view
+    /**
+     * 显示底部购物车
+     */
     private void showBottomSheet() {
         bottomSheet = createBottomSheetView();
         if (bottomSheetLayout.isSheetShowing()) {
@@ -148,13 +155,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * 创建购物车view
+     *
+     * @return view
+     */
     private View createBottomSheetView() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_bottom_sheet,
                 (ViewGroup) getWindow().getDecorView(), false);
-        MyListView myListView= (MyListView) view.findViewById(R.id.lv_product);
-        TextView tv_clear= (TextView) view.findViewById(R.id.clear);
+        MyListView myListView = (MyListView) view.findViewById(R.id.lv_product);
+        TextView tv_clear = (TextView) view.findViewById(R.id.clear);
         tv_clear.setOnClickListener(this);
-        shopCartAdapter=new ShopCartAdapter(this,carList);
+        // TODO: 2016/12/24  这里应该获取购物车里面的实体类数据
+        shopCartAdapter = new ShopCartAdapter(this, carList);
         myListView.setAdapter(shopCartAdapter);
         return view;
     }

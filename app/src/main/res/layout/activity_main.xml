@@ -42,7 +42,7 @@
                 android:background="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/bv_unm"
+                android:id="@+id/tv_total_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -50,10 +50,11 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/shape_data"
                 android:gravity="center"
+                android:text="@string/_18"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_11"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <TextView

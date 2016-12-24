@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.my.mengniudemo.R;
-import com.my.mengniudemo.bean.ShopCartBean;
+import com.my.mengniudemo.bean.ProductBean;
 
 import java.util.List;
 
 /**
- * 底部购物车
+ * 底部购物车Adapter
  * <p>
  * Created by YJH on 2016/12/22 23:22.
  */
@@ -22,9 +22,9 @@ import java.util.List;
 public class ShopCartAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<ShopCartBean> scBeanList;
+    private List<ProductBean> scBeanList;
 
-    public ShopCartAdapter(Context mContext, List<ShopCartBean> scBeanList) {
+    public ShopCartAdapter(Context mContext, List<ProductBean> scBeanList) {
         this.mContext = mContext;
         this.scBeanList = scBeanList;
     }
@@ -55,8 +55,8 @@ public class ShopCartAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ShopCartBean bean = scBeanList.get(position);
-        holder.tv_name.setText(bean.getName());
+        ProductBean bean = scBeanList.get(position);
+        holder.tv_name.setText(bean.getProductName());
         holder.tv_count.setText(String.valueOf(bean.getBuyNum()));
         holder.tv_price.setText(String.valueOf(bean.getPrice()));
 

@@ -11,6 +11,7 @@ public class CategoryBean {
     private String typeName;
     private List<ProductBean> list;
     private boolean flag;   //作为左面ListView是否被点击的标识
+    private int buyNum;     //左面ListView显示订购数量
 
     public String getTypeName() {
         return typeName;
@@ -34,5 +35,13 @@ public class CategoryBean {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public int getBuyNum() {
+        return buyNum;
+    }
+
+    public void setBuyNum(int buyNum) {
+        this.buyNum = buyNum;
     }
 }

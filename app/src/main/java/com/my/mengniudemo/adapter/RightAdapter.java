@@ -1,6 +1,7 @@
 package com.my.mengniudemo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.my.mengniudemo.R;
 import com.my.mengniudemo.bean.CategoryBean;
+import com.my.mengniudemo.bean.ProductBean;
 
 import java.util.List;
 
@@ -22,12 +24,17 @@ import java.util.List;
 
 public class RightAdapter extends SectionedBaseAdapter {
 
+    private final String TAG = getClass().getSimpleName() + "--->";
+    public static final int ADD = 2;
+    public static final int REMOVE = 1;
     private Context context;
     private List<CategoryBean> cateBeanList;
+    private LeftListAdapter leftAdapter;
 
-    public RightAdapter(Context context, List<CategoryBean> cateBeanList) {
+    public RightAdapter(Context context, List<CategoryBean> cateBeanList, LeftListAdapter leftAdapter) {
         this.context = context;
         this.cateBeanList = cateBeanList;
+        this.leftAdapter = leftAdapter;
     }
 
     @Override
@@ -61,8 +68,15 @@ public class RightAdapter extends SectionedBaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_product_name.setText(cateBeanList.get(section)
-                .getList().get(position).getProductName());     //设置产品名称
+        ProductBean bean = cateBeanList.get(section).getList().get(position);
+        holder.tv_product_name.setText(bean.getProductName());     //设置产品名称
+
+        if (bean.getBuyNum() == 0) {
+            holder.setIsVisible(View.GONE);
+        } else {
+            holder.setIsVisible(View.VISIBLE);
+            holder.tv_product_num.setText(String.valueOf(bean.getBuyNum()));
+        }
 
         OnClickListenerRightItem onClickListener = new OnClickListenerRightItem(section, position, holder);
         holder.ll_right_list.setOnClickListener(onClickListener);
@@ -94,11 +108,11 @@ public class RightAdapter extends SectionedBaseAdapter {
                     break;
 
                 case R.id.iv_add_product:
-                    Toast.makeText(context, "添加商品", Toast.LENGTH_SHORT).show();
+                    addAndRemoveNum(section, position, ADD);
                     break;
 
                 case R.id.iv_remove_product:
-                    Toast.makeText(context, "移除商品", Toast.LENGTH_SHORT).show();
+                    addAndRemoveNum(section, position, REMOVE);
                     break;
             }
         }
@@ -117,6 +131,16 @@ public class RightAdapter extends SectionedBaseAdapter {
             iv_remove_product = (ImageView) convertView.findViewById(R.id.iv_remove_product);
             iv_add_product = (ImageView) convertView.findViewById(R.id.iv_add_product);
             tv_product_num = (TextView) convertView.findViewById(R.id.tv_product_num);
+        }
+
+        /**
+         * 控制减少数量按钮和数量tv是否显示
+         *
+         * @param visible View.GONE     View.INVISIBLE    View.VISIBLE
+         */
+        private void setIsVisible(int visible) {
+            iv_remove_product.setVisibility(visible);
+            tv_product_num.setVisibility(visible);
         }
     }
 
@@ -143,4 +167,34 @@ public class RightAdapter extends SectionedBaseAdapter {
             tv_right_header_item = (TextView) convertView.findViewById(R.id.tv_right_header_item);
         }
     }
+
+    /**
+     * 点击添加或者删除按钮，通知左边的ListView数据变化并且刷新
+     *
+     * @param section  section
+     * @param position position
+     * @param mode     1 = remove，2 = add
+     */
+    private void addAndRemoveNum(int section, int position, int mode) {
+        ProductBean bean = cateBeanList.get(section).getList().get(position);
+        int num = bean.getBuyNum();
+        switch (mode) {
+            case ADD:
+                bean.setBuyNum(++num);
+                leftAdapter.showBuyNum(section, 1);         //通知左边的ListView数据变化并且刷新
+                break;
+
+            case REMOVE:
+                if (num > 0) {
+                    bean.setBuyNum(--num);
+                    leftAdapter.showBuyNum(section, -1);    //通知左边的ListView数据变化并且刷新
+                }
+                break;
+
+            default:
+                Log.e(TAG, "模式设置错误");
+        }
+        notifyDataSetChanged();
+    }
+
 }
