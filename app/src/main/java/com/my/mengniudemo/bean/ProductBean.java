@@ -9,15 +9,17 @@ package com.my.mengniudemo.bean;
 public class ProductBean {
     private String productName;
     private float price;
-    private int buyNum;    //订购数量
+    private int buyNum;     //订购数量
+    private int section;    //所属的分组（在第几位，用于购物车中来确定分组的位置）
 
     public ProductBean() {
     }
 
-    public ProductBean(float price, int buyNum, String productName) {
+    public ProductBean(float price, int buyNum, String productName, int section) {
         this.productName = productName;
         this.price = price;
         this.buyNum = buyNum;
+        this.section = section;
     }
 
     public String getProductName() {
@@ -42,5 +44,13 @@ public class ProductBean {
 
     public void setBuyNum(int buyNum) {
         this.buyNum = buyNum;
+    }
+
+    public int getSection() {
+        return section;
+    }
+
+    public void setSection(int section) {
+        this.section = section;
     }
 }

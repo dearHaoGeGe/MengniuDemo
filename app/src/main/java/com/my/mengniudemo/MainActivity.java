@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private BottomSheetLayout bottomSheetLayout;
     private View bottomSheet;
     private LinearLayout ll_shopcar;
-    public TextView tv_total_num;
+    private TextView tv_total_num;
     private ShopCartAdapter shopCartAdapter;
     private List<ProductBean> carList;
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
 
             case R.id.clear:
-                Toast.makeText(this, "清除", Toast.LENGTH_SHORT).show();
+                clearEmptyCar();
                 break;
         }
     }
@@ -136,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
         tv_total_num = (TextView) findViewById(R.id.tv_total_num);
         ll_shopcar.setOnClickListener(this);
-        carList = TestData.setShopCartData();
-//        carList=new ArrayList<>();
+//        carList = TestData.setShopCartData();
+        carList = new ArrayList<>();
         tv_total_num.setVisibility(tv_total_num.getText().equals("0") ? View.INVISIBLE : View.VISIBLE);
     }
 
@@ -166,10 +166,61 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         MyListView myListView = (MyListView) view.findViewById(R.id.lv_product);
         TextView tv_clear = (TextView) view.findViewById(R.id.clear);
         tv_clear.setOnClickListener(this);
-        // TODO: 2016/12/24  这里应该获取购物车里面的实体类数据
+        fromRightLVGetCarData();
         shopCartAdapter = new ShopCartAdapter(this, carList);
         myListView.setAdapter(shopCartAdapter);
         return view;
+    }
+
+    /**
+     * 从右面ListView中购物车ListView的数据
+     */
+    private void fromRightLVGetCarData() {
+        carList.clear();    //每次添加数据之前必须先把之前的clear，否则会出现重复情况
+        List<CategoryBean> cb = rightAdapter.getCateBeanList();
+        for (int i = 0; i < cb.size(); i++) {
+            List<ProductBean> pb = cb.get(i).getList();
+            for (int j = 0; j < pb.size(); j++) {
+                if (pb.get(j).getBuyNum() != 0) {
+                    carList.add(pb.get(j));
+                }
+            }
+        }
+    }
+
+    /**
+     * 刷新下面购物车图标右上角的数量
+     *
+     * @param cbList cbList
+     */
+    public void refreshShopCarNum(List<CategoryBean> cbList) {
+        int carBuyNum = 0;
+        for (int i = 0; i < cbList.size(); i++) {
+            carBuyNum = carBuyNum + cbList.get(i).getBuyNum();
+        }
+        if (carBuyNum > 0) {
+            tv_total_num.setVisibility(View.VISIBLE);
+            tv_total_num.setText(String.valueOf(carBuyNum));
+        } else {
+            tv_total_num.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
+     * 清空购物车(把实体类中的所有BuyNum的数量设置为0)
+     */
+    private void clearEmptyCar() {
+        int cbListSize = cateBeanList.size();
+        for (int i = 0; i < cbListSize; i++) {
+            cateBeanList.get(i).setBuyNum(0);
+            List<ProductBean> pbList = cateBeanList.get(i).getList();
+            for (int j = 0; j < pbList.size(); j++) {
+                pbList.get(j).setBuyNum(0);
+            }
+        }
+        leftAdapter.setData(cateBeanList);
+        rightAdapter.setCateBeanList(cateBeanList);
+        bottomSheetLayout.dismissSheet();
     }
 
     //******************************** setOnScrollListener开始 ***********************************

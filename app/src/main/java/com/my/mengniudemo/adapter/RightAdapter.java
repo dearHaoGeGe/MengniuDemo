@@ -25,8 +25,8 @@ import java.util.List;
 public class RightAdapter extends SectionedBaseAdapter {
 
     private final String TAG = getClass().getSimpleName() + "--->";
-    public static final int ADD = 2;
-    public static final int REMOVE = 1;
+    private final int ADD = 2;
+    private final int REMOVE = 1;
     private Context context;
     private List<CategoryBean> cateBeanList;
     private LeftListAdapter leftAdapter;
@@ -168,6 +168,15 @@ public class RightAdapter extends SectionedBaseAdapter {
         }
     }
 
+    public List<CategoryBean> getCateBeanList() {
+        return cateBeanList;
+    }
+
+    public void setCateBeanList(List<CategoryBean> cateBeanList) {
+        this.cateBeanList = cateBeanList;
+        notifyDataSetChanged();
+    }
+
     /**
      * 点击添加或者删除按钮，通知左边的ListView数据变化并且刷新
      *
@@ -176,24 +185,29 @@ public class RightAdapter extends SectionedBaseAdapter {
      * @param mode     1 = remove，2 = add
      */
     private void addAndRemoveNum(int section, int position, int mode) {
-        ProductBean bean = cateBeanList.get(section).getList().get(position);
-        int num = bean.getBuyNum();
+        CategoryBean cb = cateBeanList.get(section);
+        ProductBean pb = cb.getList().get(position);
+        int pb_Num = pb.getBuyNum();
+        int cb_Num = cb.getBuyNum();
         switch (mode) {
             case ADD:
-                bean.setBuyNum(++num);
-                leftAdapter.showBuyNum(section, 1);         //通知左边的ListView数据变化并且刷新
+                pb.setBuyNum(++pb_Num);
+                cb.setBuyNum(++cb_Num);
                 break;
 
             case REMOVE:
-                if (num > 0) {
-                    bean.setBuyNum(--num);
-                    leftAdapter.showBuyNum(section, -1);    //通知左边的ListView数据变化并且刷新
+                if (pb_Num > 0) {
+                    pb.setBuyNum(--pb_Num);
+                    cb.setBuyNum(--cb_Num);
                 }
                 break;
 
             default:
                 Log.e(TAG, "模式设置错误");
         }
+        cb.getList().set(position, pb);     //设置本类中的数据
+        cateBeanList.set(section, cb);      //设置本类中的数据
+        leftAdapter.showBuyNum(section, position, cb_Num, pb_Num);  //通知左边的ListView修改数据然后刷新
         notifyDataSetChanged();
     }
 

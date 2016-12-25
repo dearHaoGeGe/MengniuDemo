@@ -78,4 +78,13 @@ public class ShopCartAdapter extends BaseAdapter {
             iv_remove = (ImageView) convertView.findViewById(R.id.iv_remove);
         }
     }
+
+    public List<ProductBean> getScBeanList() {
+        return scBeanList;
+    }
+
+    public void setScBeanList(List<ProductBean> scBeanList) {
+        this.scBeanList = scBeanList;
+        notifyDataSetChanged();
+    }
 }

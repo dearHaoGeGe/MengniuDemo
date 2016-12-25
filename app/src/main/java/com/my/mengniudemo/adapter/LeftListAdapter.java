@@ -12,7 +12,6 @@ import com.my.mengniudemo.R;
 import com.my.mengniudemo.bean.CategoryBean;
 import com.my.mengniudemo.bean.ProductBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,28 +100,31 @@ public class LeftListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    /**
-     * 当点击右边的ListView添加产品时，左边的ListView也要刷新数据并且更新UI
-     *
-     * @param section 位置
-     * @param num     +1  或   -1
-     */
-    public void showBuyNum(int section, int num) {
-        CategoryBean b = data.get(section);
-        b.setBuyNum(b.getBuyNum() + num);
-        notifyDataSetChanged();
-
-        int carBuyNum = 0;
-        for (int i = 0; i < data.size(); i++) {
-            carBuyNum = carBuyNum + data.get(i).getBuyNum();
-        }
-        TextView tv = ((MainActivity) context).tv_total_num;
-        if (carBuyNum > 0) {
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(String.valueOf(carBuyNum));
-        } else {
-            tv.setVisibility(View.INVISIBLE);
-        }
+    public List<CategoryBean> getData() {
+        return data;
     }
 
+    /**
+     * 当点击右边的ListView添加产品时，
+     * 左边的ListView也要刷新数据并且更新UI，
+     * 并且也要通知MainActivity中底部购物车右上角数量刷新
+     *
+     * @param section  section
+     * @param position position
+     * @param cBean    CategoryBean的BuyNum
+     * @param pBean    ProductBean的BuyNum
+     */
+    protected void showBuyNum(int section, int position, int cBean, int pBean) {
+        CategoryBean cb = data.get(section);
+        ProductBean pb = cb.getList().get(position);
+        pb.setBuyNum(pBean);
+        cb.setBuyNum(cBean);
+        cb.getList().set(position, pb);
+        data.set(section, cb);
+
+        notifyDataSetChanged();
+        //通知MainActivity中底部购物车右上角数量刷新
+        ((MainActivity) context).refreshShopCarNum(data);
+
+    }
 }

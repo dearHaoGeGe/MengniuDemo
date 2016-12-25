@@ -84,78 +84,78 @@ public class TestData {
         List<ProductBean> list11 = new ArrayList<>();
         List<ProductBean> list12 = new ArrayList<>();
 
-        list0.add(new ProductBean(30, 0, "未来星0 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星1 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星2 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星3 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星4 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星5 蒙牛未来星饮品250g*24 礼盒装"));
-        list0.add(new ProductBean(30, 0, "未来星6 蒙牛未来星饮品250g*24 礼盒装"));
+        list0.add(new ProductBean(30, 0, "未来星0 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星1 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星2 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星3 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星4 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星5 蒙牛未来星饮品250g*24 礼盒装",0));
+        list0.add(new ProductBean(30, 0, "未来星6 蒙牛未来星饮品250g*24 礼盒装",0));
 
-        list1.add(new ProductBean(80, 0, "真果粒0 开啡尔常温酸牛奶 200g*8"));
-        list1.add(new ProductBean(80, 0, "真果粒1 开啡尔常温酸牛奶 200g*8"));
-        list1.add(new ProductBean(80, 0, "真果粒2 开啡尔常温酸牛奶 200g*8"));
+        list1.add(new ProductBean(80, 0, "真果粒0 开啡尔常温酸牛奶 200g*8",1));
+        list1.add(new ProductBean(80, 0, "真果粒1 开啡尔常温酸牛奶 200g*8",1));
+        list1.add(new ProductBean(80, 0, "真果粒2 开啡尔常温酸牛奶 200g*8",1));
 
-        list2.add(new ProductBean(50, 0, "舒化奶0 醇纤牛奶 250ml*12盒 礼盒装"));
-        list2.add(new ProductBean(50, 0, "舒化奶1 醇纤牛奶 250ml*12盒 礼盒装"));
-        list2.add(new ProductBean(50, 0, "舒化奶2 醇纤牛奶 250ml*12盒 礼盒装"));
-        list2.add(new ProductBean(50, 0, "舒化奶3 醇纤牛奶 250ml*12盒 礼盒装"));
+        list2.add(new ProductBean(50, 0, "舒化奶0 醇纤牛奶 250ml*12盒 礼盒装",2));
+        list2.add(new ProductBean(50, 0, "舒化奶1 醇纤牛奶 250ml*12盒 礼盒装",2));
+        list2.add(new ProductBean(50, 0, "舒化奶2 醇纤牛奶 250ml*12盒 礼盒装",2));
+        list2.add(new ProductBean(50, 0, "舒化奶3 醇纤牛奶 250ml*12盒 礼盒装",2));
 
-        list3.add(new ProductBean(100, 0, "低脂高钙0 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙1 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙2 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙3 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙4 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙5 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list3.add(new ProductBean(100, 0, "低脂高钙6 味可滋香蕉牛奶240ml*12盒/礼盒装"));
+        list3.add(new ProductBean(100, 0, "低脂高钙0 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙1 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙2 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙3 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙4 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙5 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
+        list3.add(new ProductBean(100, 0, "低脂高钙6 味可滋香蕉牛奶240ml*12盒/礼盒装",3));
 
-        list4.add(new ProductBean(30, 0, "蒙牛0 精选牧场纯牛奶 250ml*12支优质牛奶"));
-        list4.add(new ProductBean(30, 0, "蒙牛1 精选牧场纯牛奶 250ml*12支优质牛奶"));
+        list4.add(new ProductBean(30, 0, "蒙牛0 精选牧场纯牛奶 250ml*12支优质牛奶",4));
+        list4.add(new ProductBean(30, 0, "蒙牛1 精选牧场纯牛奶 250ml*12支优质牛奶",4));
 
-        list5.add(new ProductBean(60, 0, "冠益乳0 谷物早餐牛奶饮品250ml*12"));
-        list5.add(new ProductBean(60, 0, "冠益乳1 谷物早餐牛奶饮品250ml*12"));
-        list5.add(new ProductBean(60, 0, "冠益乳2 谷物早餐牛奶饮品250ml*12"));
-        list5.add(new ProductBean(60, 0, "冠益乳3 谷物早餐牛奶饮品250ml*12"));
-        list5.add(new ProductBean(60, 0, "冠益乳4 谷物早餐牛奶饮品250ml*12"));
-        list5.add(new ProductBean(60, 0, "冠益乳5 谷物早餐牛奶饮品250ml*12"));
+        list5.add(new ProductBean(60, 0, "冠益乳0 谷物早餐牛奶饮品250ml*12",5));
+        list5.add(new ProductBean(60, 0, "冠益乳1 谷物早餐牛奶饮品250ml*12",5));
+        list5.add(new ProductBean(60, 0, "冠益乳2 谷物早餐牛奶饮品250ml*12",5));
+        list5.add(new ProductBean(60, 0, "冠益乳3 谷物早餐牛奶饮品250ml*12",5));
+        list5.add(new ProductBean(60, 0, "冠益乳4 谷物早餐牛奶饮品250ml*12",5));
+        list5.add(new ProductBean(60, 0, "冠益乳5 谷物早餐牛奶饮品250ml*12",5));
 
-        list6.add(new ProductBean(90, 0, "纯甄0 常温酸牛奶 200g*24 家庭装"));
+        list6.add(new ProductBean(90, 0, "纯甄0 常温酸牛奶 200g*24 家庭装",6));
 
-        list7.add(new ProductBean(80, 0, "达能0 纯牛奶 PURE MILK 250ml×16包"));
-        list7.add(new ProductBean(80, 0, "达能1 纯牛奶 PURE MILK 250ml×16包"));
-        list7.add(new ProductBean(80, 0, "达能2 纯牛奶 PURE MILK 250ml×16包"));
-        list7.add(new ProductBean(80, 0, "达能3 纯牛奶 PURE MILK 250ml×16包"));
-        list7.add(new ProductBean(80, 0, "达能4 纯牛奶 PURE MILK 250ml×16包"));
-        list7.add(new ProductBean(80, 0, "达能5 纯牛奶 PURE MILK 250ml×16包"));
+        list7.add(new ProductBean(80, 0, "达能0 纯牛奶 PURE MILK 250ml×16包",7));
+        list7.add(new ProductBean(80, 0, "达能1 纯牛奶 PURE MILK 250ml×16包",7));
+        list7.add(new ProductBean(80, 0, "达能2 纯牛奶 PURE MILK 250ml×16包",7));
+        list7.add(new ProductBean(80, 0, "达能3 纯牛奶 PURE MILK 250ml×16包",7));
+        list7.add(new ProductBean(80, 0, "达能4 纯牛奶 PURE MILK 250ml×16包",7));
+        list7.add(new ProductBean(80, 0, "达能5 纯牛奶 PURE MILK 250ml×16包",7));
 
-        list8.add(new ProductBean(10, 0, "奶特0 精选牧场纯牛奶 250ml*12支优质牛奶"));
-        list8.add(new ProductBean(10, 0, "奶特1 精选牧场纯牛奶 250ml*12支优质牛奶"));
-        list8.add(new ProductBean(10, 0, "奶特2 精选牧场纯牛奶 250ml*12支优质牛奶"));
+        list8.add(new ProductBean(10, 0, "奶特0 精选牧场纯牛奶 250ml*12支优质牛奶",8));
+        list8.add(new ProductBean(10, 0, "奶特1 精选牧场纯牛奶 250ml*12支优质牛奶",8));
+        list8.add(new ProductBean(10, 0, "奶特2 精选牧场纯牛奶 250ml*12支优质牛奶",8));
 
-        list9.add(new ProductBean(30, 0, "酸酸乳0 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳1 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳2 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳3 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳4 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳5 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳6 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳7 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳8 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳9 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳10 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳11 常温酸牛奶 200g*12盒"));
-        list9.add(new ProductBean(30, 0, "酸酸乳12 常温酸牛奶 200g*12盒"));
+        list9.add(new ProductBean(30, 0, "酸酸乳0 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳1 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳2 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳3 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳4 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳5 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳6 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳7 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳8 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳9 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳10 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳11 常温酸牛奶 200g*12盒",9));
+        list9.add(new ProductBean(30, 0, "酸酸乳12 常温酸牛奶 200g*12盒",9));
 
-        list10.add(new ProductBean(40, 0, "随变0 醇纤牛奶 250ml*12盒 礼盒装"));
-        list10.add(new ProductBean(40, 0, "随变1 醇纤牛奶 250ml*12盒 礼盒装"));
-        list10.add(new ProductBean(40, 0, "随变2 醇纤牛奶 250ml*12盒 礼盒装"));
-        list10.add(new ProductBean(40, 0, "随变3 醇纤牛奶 250ml*12盒 礼盒装"));
+        list10.add(new ProductBean(40, 0, "随变0 醇纤牛奶 250ml*12盒 礼盒装",10));
+        list10.add(new ProductBean(40, 0, "随变1 醇纤牛奶 250ml*12盒 礼盒装",10));
+        list10.add(new ProductBean(40, 0, "随变2 醇纤牛奶 250ml*12盒 礼盒装",10));
+        list10.add(new ProductBean(40, 0, "随变3 醇纤牛奶 250ml*12盒 礼盒装",10));
 
-        list11.add(new ProductBean(50, 0, "现代牧场0 纯牛奶250ml*16盒"));
+        list11.add(new ProductBean(50, 0, "现代牧场0 纯牛奶250ml*16盒",11));
 
-        list12.add(new ProductBean(60, 0, "优益C0 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list12.add(new ProductBean(60, 0, "优益C1 味可滋香蕉牛奶240ml*12盒/礼盒装"));
-        list12.add(new ProductBean(60, 0, "优益C2 味可滋香蕉牛奶240ml*12盒/礼盒装"));
+        list12.add(new ProductBean(60, 0, "优益C0 味可滋香蕉牛奶240ml*12盒/礼盒装",12));
+        list12.add(new ProductBean(60, 0, "优益C1 味可滋香蕉牛奶240ml*12盒/礼盒装",12));
+        list12.add(new ProductBean(60, 0, "优益C2 味可滋香蕉牛奶240ml*12盒/礼盒装",12));
 
         cateBean0.setList(list0);
         cateBean1.setList(list1);
