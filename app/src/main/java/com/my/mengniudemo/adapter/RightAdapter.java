@@ -172,9 +172,17 @@ public class RightAdapter extends SectionedBaseAdapter {
         return cateBeanList;
     }
 
-    public void setCateBeanList(List<CategoryBean> cateBeanList) {
+    /**
+     * 重新设置adapter数据，并且控制是否刷新
+     *
+     * @param cateBeanList           新的cateBeanList
+     * @param isNotifyDataSetChanged 是否刷新
+     */
+    public void setCateBeanList(List<CategoryBean> cateBeanList, boolean isNotifyDataSetChanged) {
         this.cateBeanList = cateBeanList;
-        notifyDataSetChanged();
+        if (isNotifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.my.mengniudemo.MainActivity;
 import com.my.mengniudemo.R;
 import com.my.mengniudemo.bean.ProductBean;
 
@@ -60,6 +61,11 @@ public class ShopCartAdapter extends BaseAdapter {
         holder.tv_count.setText(String.valueOf(bean.getBuyNum()));
         holder.tv_price.setText(String.valueOf(bean.getPrice()));
 
+
+        OnClickListener onClick = new OnClickListener(position);
+        holder.iv_add.setOnClickListener(onClick);
+        holder.iv_remove.setOnClickListener(onClick);
+
         return convertView;
     }
 
@@ -79,12 +85,46 @@ public class ShopCartAdapter extends BaseAdapter {
         }
     }
 
+    private class OnClickListener implements View.OnClickListener {
+        private int position;
+
+        private OnClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            int buyNum = scBeanList.get(position).getBuyNum();
+            switch (v.getId()) {
+                case R.id.iv_add:
+                    scBeanList.get(position).setBuyNum(++buyNum);
+                    break;
+
+                case R.id.iv_remove:
+                    if (buyNum > 0) {
+                        scBeanList.get(position).setBuyNum(--buyNum);
+                        if (buyNum == 0) {
+                            scBeanList.remove(position);
+                        }
+                    }
+                    break;
+            }
+            if (scBeanList.size() != 0) {
+                notifyDataSetChanged();
+            }
+            ((MainActivity) mContext).fromCarGetData();
+        }
+    }
+
     public List<ProductBean> getScBeanList() {
         return scBeanList;
     }
 
-    public void setScBeanList(List<ProductBean> scBeanList) {
+    public void setScBeanList(List<ProductBean> scBeanList, boolean isNotifyDataSetChanged) {
         this.scBeanList = scBeanList;
-        notifyDataSetChanged();
+        if (isNotifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
     }
+
 }

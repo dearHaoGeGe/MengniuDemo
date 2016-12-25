@@ -58,7 +58,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_totle_money"
+            android:id="@+id/tv_total_money"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_marginLeft="@dimen/dp_15"

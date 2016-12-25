@@ -40,11 +40,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     int y = 0;
     int z = 0;
 
-    //底部购物车
+    //底部和购物车
     private BottomSheetLayout bottomSheetLayout;
     private View bottomSheet;
     private LinearLayout ll_shopcar;
     private TextView tv_total_num;
+    private TextView tv_total_money;
     private ShopCartAdapter shopCartAdapter;
     private List<ProductBean> carList;
 
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         cateBeanList = TestData.setFalseData();
         initListView();
         initPinnedHeaderListView();
-
         initBottomLayout();
     }
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         cb.setFlag(false);
                     }
                 }
-                leftAdapter.setData(cateBeanList);
+                leftAdapter.setData(cateBeanList, true);
 
                 //点击左侧的时候和右侧的ListView设置关联
                 int rightSection = 0;
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ll_shopcar = (LinearLayout) findViewById(R.id.ll_shopcar);
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
         tv_total_num = (TextView) findViewById(R.id.tv_total_num);
+        tv_total_money = (TextView) findViewById(R.id.tv_total_money);
         ll_shopcar.setOnClickListener(this);
-//        carList = TestData.setShopCartData();
         carList = new ArrayList<>();
         tv_total_num.setVisibility(tv_total_num.getText().equals("0") ? View.INVISIBLE : View.VISIBLE);
     }
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * 从右面ListView中购物车ListView的数据
+     * 从右面ListView中获得购物车ListView的数据
      */
     private void fromRightLVGetCarData() {
         carList.clear();    //每次添加数据之前必须先把之前的clear，否则会出现重复情况
@@ -189,20 +189,71 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * 刷新下面购物车图标右上角的数量
+     * 当在购物车里面点击ListView中的add或者remove图标，
+     * 从购物车ListView中获得数据，
+     * 通知左边ListView和右边ListView刷新数据和UI，
+     * 同时购物车的价格和数量角标也要刷新
+     */
+    public void fromCarGetData() {
+        List<ProductBean> pbList = shopCartAdapter.getScBeanList();
+        if (pbList.size() == 0) {
+            bottomSheetLayout.dismissSheet();
+        }
+
+        //计算一件产品买了几个
+        for (int i = 0; i < pbList.size(); i++) {
+            ProductBean pb = pbList.get(i);
+            List<ProductBean> list = cateBeanList.get(pb.getSection()).getList();
+            for (int j = 0; j < list.size(); j++) {
+                if (pb.getProductName().equals(list.get(j).getProductName())) {
+                    list.set(j, pb);
+                    cateBeanList.get(pb.getSection()).setList(list);
+                }
+            }
+        }
+
+        //计算一共买了多少件产品（包含重复）
+        for (int i = 0; i < cateBeanList.size(); i++) {
+            int cateBuyNum = 0;
+            List<ProductBean> proBeanList = cateBeanList.get(i).getList();
+            for (int j = 0; j < proBeanList.size(); j++) {
+                cateBuyNum += proBeanList.get(j).getBuyNum();
+
+            }
+            cateBeanList.get(i).setBuyNum(cateBuyNum);
+        }
+
+        leftAdapter.setData(cateBeanList, true);
+        rightAdapter.setCateBeanList(cateBeanList, true);
+
+        refreshShopCarNum(cateBeanList);
+    }
+
+    /**
+     * 刷新下面购物车图标右上角的数量和价格
      *
      * @param cbList cbList
      */
     public void refreshShopCarNum(List<CategoryBean> cbList) {
         int carBuyNum = 0;
+        float total_money = 0.0f;
         for (int i = 0; i < cbList.size(); i++) {
-            carBuyNum = carBuyNum + cbList.get(i).getBuyNum();
+            carBuyNum += cbList.get(i).getBuyNum();
+
+            List<ProductBean> pbList = cbList.get(i).getList();
+            for (int j = 0; j < pbList.size(); j++) {
+                if (pbList.get(j).getBuyNum() > 0) {
+                    total_money += (pbList.get(j).getPrice()) * (pbList.get(j).getBuyNum());
+                }
+            }
         }
         if (carBuyNum > 0) {
             tv_total_num.setVisibility(View.VISIBLE);
             tv_total_num.setText(String.valueOf(carBuyNum));
+            tv_total_money.setText(String.valueOf("￥" + total_money));
         } else {
             tv_total_num.setVisibility(View.INVISIBLE);
+            tv_total_money.setText(String.valueOf("￥0.00"));
         }
     }
 
@@ -218,9 +269,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 pbList.get(j).setBuyNum(0);
             }
         }
-        leftAdapter.setData(cateBeanList);
-        rightAdapter.setCateBeanList(cateBeanList);
+        leftAdapter.setData(cateBeanList, true);
+        rightAdapter.setCateBeanList(cateBeanList, true);
         bottomSheetLayout.dismissSheet();
+        refreshShopCarNum(cateBeanList);
     }
 
     //******************************** setOnScrollListener开始 ***********************************
@@ -253,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
             if (x != y) {
-                leftAdapter.setData(cateBeanList);  //左侧ListView刷新显示
+                leftAdapter.setData(cateBeanList, true);  //左侧ListView刷新显示
                 y = x;
                 //左侧ListView滚动到最后位置
                 if (y == lv_left.getLastVisiblePosition()) {
@@ -297,6 +349,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
 }

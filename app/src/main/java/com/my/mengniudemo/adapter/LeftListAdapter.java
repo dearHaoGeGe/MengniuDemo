@@ -95,9 +95,17 @@ public class LeftListAdapter extends BaseAdapter {
         }
     }
 
-    public void setData(List<CategoryBean> data) {
+    /**
+     * 重新设置adapter数据，并且控制是否刷新
+     *
+     * @param data                   新的数据data
+     * @param isNotifyDataSetChanged 是否刷新
+     */
+    public void setData(List<CategoryBean> data, boolean isNotifyDataSetChanged) {
         this.data = data;
-        notifyDataSetChanged();
+        if (isNotifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
     }
 
     public List<CategoryBean> getData() {
