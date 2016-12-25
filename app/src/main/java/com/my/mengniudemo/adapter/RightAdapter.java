@@ -5,11 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.my.mengniudemo.MainActivity;
 import com.my.mengniudemo.R;
 import com.my.mengniudemo.bean.CategoryBean;
 import com.my.mengniudemo.bean.ProductBean;
@@ -108,11 +114,11 @@ public class RightAdapter extends SectionedBaseAdapter {
                     break;
 
                 case R.id.iv_add_product:
-                    addAndRemoveNum(section, position, ADD);
+                    addAndRemoveNum(section, position, ADD, holder);
                     break;
 
                 case R.id.iv_remove_product:
-                    addAndRemoveNum(section, position, REMOVE);
+                    addAndRemoveNum(section, position, REMOVE, holder);
                     break;
             }
         }
@@ -192,22 +198,26 @@ public class RightAdapter extends SectionedBaseAdapter {
      * @param position position
      * @param mode     1 = remove，2 = add
      */
-    private void addAndRemoveNum(int section, int position, int mode) {
+    private void addAndRemoveNum(int section, int position, int mode, ViewHolder holder) {
         CategoryBean cb = cateBeanList.get(section);
         ProductBean pb = cb.getList().get(position);
         int pb_Num = pb.getBuyNum();
         int cb_Num = cb.getBuyNum();
         switch (mode) {
             case ADD:
+                holder.iv_remove_product.setAnimation(pb_Num < 1 ? getShowAnimation() : null);  //动画
                 pb.setBuyNum(++pb_Num);
                 cb.setBuyNum(++cb_Num);
+                addProductAnimation(holder.iv_add_product);     //动画
                 break;
 
             case REMOVE:
                 if (pb_Num > 0) {
+                    holder.iv_remove_product.setAnimation(pb_Num < 2 ? getHiddenAnimation() : null);    //动画
                     pb.setBuyNum(--pb_Num);
                     cb.setBuyNum(--cb_Num);
                 }
+
                 break;
 
             default:
@@ -217,6 +227,63 @@ public class RightAdapter extends SectionedBaseAdapter {
         cateBeanList.set(section, cb);      //设置本类中的数据
         leftAdapter.showBuyNum(section, position, cb_Num, pb_Num);  //通知左边的ListView修改数据然后刷新
         notifyDataSetChanged();
+
+
+    }
+
+    /**
+     * 添加 添加产品动画
+     *
+     * @param v View
+     */
+    private void addProductAnimation(View v) {
+        int[] startLocation = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
+        v.getLocationInWindow(startLocation);// 这是获取购买按钮的在屏幕的X、Y坐标（这也是动画开始的坐标）
+        ImageView ball = new ImageView(context);
+        ball.setImageResource(R.mipmap.number);
+        ((MainActivity) context).setAnim(ball, startLocation);// 开始执行动画
+    }
+
+    /**
+     * 显示减号的动画
+     *
+     * @return Animation
+     */
+    private Animation getShowAnimation() {
+        AnimationSet set = new AnimationSet(true);
+        RotateAnimation rotate = new RotateAnimation(0, 720, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        set.addAnimation(rotate);
+        TranslateAnimation translate = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_SELF, 2f
+                , TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 0);
+        set.addAnimation(translate);
+        AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        set.addAnimation(alpha);
+        set.setDuration(500);
+        return set;
+    }
+
+    /**
+     * 隐藏减号的动画
+     *
+     * @return Animation
+     */
+    private Animation getHiddenAnimation() {
+        AnimationSet set = new AnimationSet(true);
+        RotateAnimation rotate = new RotateAnimation(0, 720, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        set.addAnimation(rotate);
+        TranslateAnimation translate = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 2f
+                , TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 0);
+        set.addAnimation(translate);
+        AlphaAnimation alpha = new AlphaAnimation(1, 0);
+        set.addAnimation(alpha);
+        set.setDuration(500);
+        return set;
     }
 
 }
