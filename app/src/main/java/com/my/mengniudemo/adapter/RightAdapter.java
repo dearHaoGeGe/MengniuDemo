@@ -78,7 +78,7 @@ public class RightAdapter extends SectionedBaseAdapter {
         holder.tv_product_name.setText(bean.getProductName());     //设置产品名称
 
         if (bean.getBuyNum() == 0) {
-            holder.setIsVisible(View.GONE);
+            holder.setIsVisible(View.INVISIBLE);
         } else {
             holder.setIsVisible(View.VISIBLE);
             holder.tv_product_num.setText(String.valueOf(bean.getBuyNum()));
