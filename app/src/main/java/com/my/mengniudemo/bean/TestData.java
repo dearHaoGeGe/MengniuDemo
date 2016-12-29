@@ -252,4 +252,28 @@ public class TestData {
 
         return list;
     }
+
+    public static List<Classify> getClassifyData() {
+        List<Classify> classifyList = new ArrayList<>();
+        classifyList.add(new Classify("常温", true));
+        classifyList.add(new Classify("低温", true));
+        classifyList.add(new Classify("冰品", true));
+        classifyList.add(new Classify("奶酪", true));
+        classifyList.add(new Classify("奶粉", true));
+        classifyList.add(new Classify("植物蛋白", true));
+        classifyList.add(new Classify("雅士利", true));
+        return classifyList;
+    }
+
+    public static List<Packaging> getPackagingData() {
+        List<Packaging> packagingList = new ArrayList<>();
+        packagingList.add(new Packaging("利乐枕", true));
+        packagingList.add(new Packaging("无菌砖", true));
+        packagingList.add(new Packaging("百利装", true));
+        packagingList.add(new Packaging("家庭装", true));
+        packagingList.add(new Packaging("玻璃瓶装", true));
+        packagingList.add(new Packaging("罐装", true));
+        packagingList.add(new Packaging("艾科林立式包装", true));
+        return packagingList;
+    }
 }

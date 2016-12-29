@@ -31,7 +31,6 @@ public class MyScrollView extends ScrollView {
 
     @Override
     protected int computeScrollDeltaToGetChildRectOnScreen(Rect rect) {
-
         return 0;
     }
 

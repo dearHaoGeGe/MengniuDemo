@@ -1,4 +1,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 左边ListView选中的状态 -->
     <item
         android:bottom="-8dp"
         android:right="-8dp"

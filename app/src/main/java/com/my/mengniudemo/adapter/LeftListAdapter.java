@@ -89,7 +89,7 @@ public class LeftListAdapter extends BaseAdapter {
                 left_list_item.setTextColor(context.getResources().getColor(R.color.black));
                 left_list_item.setBackgroundResource(R.drawable.left_stroke);
             } else {
-                left_list_item.setTextColor(context.getResources().getColor(R.color.gray));
+                left_list_item.setTextColor(context.getResources().getColor(R.color.gray_3));
                 left_list_item.setBackgroundResource(0);
             }
         }

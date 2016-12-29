@@ -3,6 +3,8 @@ package com.my.mengniudemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,20 +19,26 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.my.mengniudemo.adapter.ClassifyAndPackageAdapter;
+import com.my.mengniudemo.adapter.GirdDropDownAdapter;
 import com.my.mengniudemo.adapter.LeftListAdapter;
 import com.my.mengniudemo.adapter.RightAdapter;
 import com.my.mengniudemo.adapter.ShopCartAdapter;
 import com.my.mengniudemo.bean.CategoryBean;
 import com.my.mengniudemo.bean.ProductBean;
 import com.my.mengniudemo.bean.TestData;
+import com.my.mengniudemo.view.MyGridView;
 import com.my.mengniudemo.view.MyListView;
 import com.my.mengniudemo.view.PinnedHeaderListView;
+import com.yyydjk.library.DropDownMenu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnClickListener {
@@ -55,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ShopCartAdapter shopCartAdapter;
     private List<ProductBean> carList;
 
+    //最上面的筛选条
+    private DropDownMenu mDropDownMenu;
+    private List<View> popupViews;
+    private String headers[] = {"单品", "筛选"};
+    private GirdDropDownAdapter listChooseAdapter;
+    private String listChoose[] = {"单品列表", "套餐产品列表"};
+    private ClassifyAndPackageAdapter classifyAdapter;
+    private ClassifyAndPackageAdapter packageAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +79,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         initToolbar("选择产品");
+        addFalseData();
+        initSizer();
 
-        cateBeanList = TestData.setFalseData();
-        initListView();
-        initPinnedHeaderListView();
-        initBottomLayout();
+        //initListView();
+        //initPinnedHeaderListView();
+        //initBottomLayout();
     }
 
     @Override
@@ -92,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             case R.id.clear:
                 clearEmptyCar();
+                break;
+
+            case R.id.ok:
+                mDropDownMenu.closeMenu();
                 break;
         }
     }
@@ -119,30 +141,94 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 pinnedListView.setSelection(rightSection);
                 break;
+
+            case R.id.gv_classify:
+                classifyAdapter.setIsSelected(position);
+                break;
+
+            case R.id.gv_packaging:
+                packageAdapter.setIsSelected(position);
+                break;
+
+            default:
+                position = position - 1;
+                if (position > -1) {
+                    listChooseAdapter.setCheckItem(position);
+                    mDropDownMenu.setTabText(position == 0 ? "单品" : "套餐");
+                    mDropDownMenu.closeMenu();
+                }
+                break;
         }
     }
 
+    private void addFalseData() {
+        cateBeanList = TestData.setFalseData();
+    }
 
-    private void initListView() {
-        lv_left = (ListView) findViewById(R.id.lv_left);
+    /**
+     * 初始化顶部的筛选器
+     */
+    private void initSizer() {
+        mDropDownMenu = (DropDownMenu) findViewById(R.id.dropDownMenu);
+
+        //选择单品或者套餐列表
+        ListView lvChoose = new ListView(this);
+        View header = getLayoutInflater().inflate(R.layout.item_list_drop_down, null);
+        TextView tv = (TextView) header.findViewById(R.id.text);
+        tv.setText("选择产品列表类型");
+        lvChoose.addHeaderView(header);
+        listChooseAdapter = new GirdDropDownAdapter(this, Arrays.asList(listChoose));
+        lvChoose.setDividerHeight(0);
+        lvChoose.setAdapter(listChooseAdapter);
+        lvChoose.setOnItemClickListener(this);
+
+        //选择业态和包装类型
+        View view = getLayoutInflater().inflate(R.layout.choose_classify_package_layout, (ViewGroup) getWindow().getDecorView(), false);
+        MyGridView gv_classify = (MyGridView) view.findViewById(R.id.gv_classify);
+        classifyAdapter = new ClassifyAndPackageAdapter(this, TestData.getClassifyData());
+        gv_classify.setAdapter(classifyAdapter);
+        MyGridView gv_packaging = (MyGridView) view.findViewById(R.id.gv_packaging);
+        packageAdapter = new ClassifyAndPackageAdapter(this, TestData.getPackagingData());
+        gv_packaging.setAdapter(packageAdapter);
+        TextView tv_ok = (TextView) view.findViewById(R.id.ok);
+        tv_ok.setOnClickListener(this);
+        gv_classify.setOnItemClickListener(this);
+        gv_packaging.setOnItemClickListener(this);
+
+        popupViews = new ArrayList<>();
+        popupViews.add(lvChoose);
+        popupViews.add(view);
+
+        View contentView = getLayoutInflater().inflate(R.layout.aa, (ViewGroup) getWindow().getDecorView(), false);
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        initListView(contentView);
+        initPinnedHeaderListView(contentView);
+        initBottomLayout(contentView);
+
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
+    }
+
+    private void initListView(View view) {
+        lv_left = (ListView) view.findViewById(R.id.lv_left);
         leftAdapter = new LeftListAdapter(this, cateBeanList);
         lv_left.setAdapter(leftAdapter);
         lv_left.setOnItemClickListener(this);
     }
 
-    private void initPinnedHeaderListView() {
-        pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
+    private void initPinnedHeaderListView(View view) {
+        pinnedListView = (PinnedHeaderListView) view.findViewById(R.id.pinnedListView);
         rightAdapter = new RightAdapter(this, cateBeanList, leftAdapter);
         pinnedListView.setAdapter(rightAdapter);
         pinnedListView.setOnScrollListener(this);
     }
 
-    private void initBottomLayout() {
-        ll_shopcar = (LinearLayout) findViewById(R.id.ll_shopcar);
-        bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
-        tv_total_num = (TextView) findViewById(R.id.tv_total_num);
-        tv_total_money = (TextView) findViewById(R.id.tv_total_money);
-        tv_car = (TextView) findViewById(R.id.tv_car);
+    private void initBottomLayout(View view) {
+        ll_shopcar = (LinearLayout) view.findViewById(R.id.ll_shopcar);
+        bottomSheetLayout = (BottomSheetLayout) view.findViewById(R.id.bottomSheetLayout);
+        tv_total_num = (TextView) view.findViewById(R.id.tv_total_num);
+        tv_total_money = (TextView) view.findViewById(R.id.tv_total_money);
+        tv_car = (TextView) view.findViewById(R.id.tv_car);
         ll_shopcar.setOnClickListener(this);
         carList = new ArrayList<>();
         tv_total_num.setVisibility(tv_total_num.getText().equals("0") ? View.INVISIBLE : View.VISIBLE);
@@ -371,6 +457,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     //******************************** 动画 结束 ***********************************
 
+    @Override
+    public void onBackPressed() {
+        //退出activity前关闭菜单
+        if (mDropDownMenu.isShowing()) {
+            mDropDownMenu.closeMenu();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     //******************************** setOnScrollListener开始 ***********************************
     @Override
