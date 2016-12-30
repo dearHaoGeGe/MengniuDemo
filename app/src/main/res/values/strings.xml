@@ -6,4 +6,8 @@
     <string name="￥0.00">￥0.00</string>
     <string name="classify">业态</string>
     <string name="packaging">包装</string>
+    <string name="single_product">单品</string>
+    <string name="give_product">赠品</string>
+    <string name="check_photo">查看图片</string>
+    <string name="example_product">蒙牛特仑苏低脂纯牛奶250ml X 12包</string>
 </resources>

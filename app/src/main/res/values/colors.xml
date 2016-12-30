@@ -8,9 +8,10 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray_light">#DDDDDD</color>
-    <color name="gray_3">#888888</color>
-    <color name="gray_2">#EEEEEE</color>
     <color name="gray_1">#EAEAEA</color>
+    <color name="gray_2">#EEEEEE</color>
+    <color name="gray_3">#888888</color>
+    <color name="gray_4">#F1F8F0</color>
     <color name="line_color">#ECEDEF</color>
 
     <color name="gray">#cccccc</color>
@@ -21,5 +22,9 @@
     <color name="mask_color">#88888888</color>
     <color name="check_bg">#f2f2f2</color>
     <color name="un_press_color">#1EBD61</color>
+
+    <color name="light_yellow">#ff9900</color>
+    <color name="heavy_yellow">#cc6600</color>
+    <color name="orange">#FFF0AB00</color>
 
 </resources>

@@ -3,8 +3,6 @@ package com.my.mengniudemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +17,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -199,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         popupViews.add(lvChoose);
         popupViews.add(view);
 
-        View contentView = getLayoutInflater().inflate(R.layout.aa, (ViewGroup) getWindow().getDecorView(), false);
+        View contentView = getLayoutInflater().inflate(R.layout.activity_main_product, (ViewGroup) getWindow().getDecorView(), false);
         contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         initListView(contentView);
