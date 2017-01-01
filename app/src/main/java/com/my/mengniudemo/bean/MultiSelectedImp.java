@@ -6,8 +6,9 @@ package com.my.mengniudemo.bean;
  * Created by YJH on 2016/12/28 13:49.
  */
 
-public interface MultiSeletedImp {
+public interface MultiSelectedImp {
     String getName();
+
     void setName(String name);
 
     boolean isSelected();

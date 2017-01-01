@@ -6,7 +6,7 @@ package com.my.mengniudemo.bean;
  * <p>
  * Created by YJH on 2016/12/28 11:35.
  */
-public class Packaging implements MultiSeletedImp {
+public class Packaging implements MultiSelectedImp {
     private String name;
     private boolean isSelected;
 

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.my.mengniudemo.R;
-import com.my.mengniudemo.bean.MultiSeletedImp;
+import com.my.mengniudemo.bean.MultiSelectedImp;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import java.util.List;
 public class ClassifyAndPackageAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<? extends MultiSeletedImp> list;
+    private List<? extends MultiSelectedImp> list;
 
-    public ClassifyAndPackageAdapter(Context mContext, List<? extends MultiSeletedImp> list) {
+    public ClassifyAndPackageAdapter(Context mContext, List<? extends MultiSelectedImp> list) {
         this.mContext = mContext;
         this.list = list;
     }
