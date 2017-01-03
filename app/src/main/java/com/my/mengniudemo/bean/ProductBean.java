@@ -11,15 +11,19 @@ public class ProductBean {
     private float price;
     private int buyNum;     //订购数量
     private int section;    //所属的分组（在第几位，用于购物车中来确定分组的位置）
+    private int stockItem;     //库存件数（剩余件数）
+    private int stockPackage;   //库存包数（剩余包数）
 
     public ProductBean() {
     }
 
-    public ProductBean(float price, int buyNum, String productName, int section) {
+    public ProductBean(float price, int buyNum, String productName, int section, int stockItem, int stockPackage) {
         this.productName = productName;
         this.price = price;
         this.buyNum = buyNum;
         this.section = section;
+        this.stockItem = stockItem;
+        this.stockPackage = stockPackage;
     }
 
     public String getProductName() {
@@ -52,5 +56,21 @@ public class ProductBean {
 
     public void setSection(int section) {
         this.section = section;
+    }
+
+    public int getStockItem() {
+        return stockItem;
+    }
+
+    public void setStockItem(int stockItem) {
+        this.stockItem = stockItem;
+    }
+
+    public int getStockPackage() {
+        return stockPackage;
+    }
+
+    public void setStockPackage(int stockPackage) {
+        this.stockPackage = stockPackage;
     }
 }

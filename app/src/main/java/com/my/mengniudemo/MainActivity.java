@@ -15,6 +15,8 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,12 +27,10 @@ import com.my.mengniudemo.adapter.ClassifyAndPackageAdapter;
 import com.my.mengniudemo.adapter.GirdDropDownAdapter;
 import com.my.mengniudemo.adapter.LeftListAdapter;
 import com.my.mengniudemo.adapter.RightAdapter;
-import com.my.mengniudemo.adapter.ShopCartAdapter;
 import com.my.mengniudemo.bean.CategoryBean;
 import com.my.mengniudemo.bean.ProductBean;
 import com.my.mengniudemo.bean.TestData;
 import com.my.mengniudemo.view.MyGridView;
-import com.my.mengniudemo.view.MyListView;
 import com.my.mengniudemo.view.PinnedHeaderListView;
 import com.yyydjk.library.DropDownMenu;
 
@@ -50,15 +50,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     int y = 0;
     int z = 0;
 
-    //底部和购物车
+    //底部产品数量编辑
     private BottomSheetLayout bottomSheetLayout;
     private View bottomSheet;
-    private LinearLayout ll_shopcar;
     private TextView tv_total_num;
     private TextView tv_total_money;
-    private TextView tv_car;
-    private ShopCartAdapter shopCartAdapter;
-    private List<ProductBean> carList;
 
     //最上面的筛选条
     private DropDownMenu mDropDownMenu;
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         initToolbar("选择产品");
         addFalseData();
-        initSizer();
+        initSizer();    //初始化顶部的筛选器
 
         //initListView();
         //initPinnedHeaderListView();
@@ -101,16 +97,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_shopcar:
-                showBottomSheet();
-                break;
-
-            case R.id.clear:
-                clearEmptyCar();
-                break;
-
             case R.id.ok:
                 mDropDownMenu.closeMenu();
+                break;
+
+            case R.id.tv_check_photo:
+                Toast.makeText(this, "查看照片", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.tv_close_sheet:
+                if (bottomSheetLayout.isSheetShowing()) {
+                    bottomSheetLayout.dismissSheet();
+                }
+                break;
+
+            case R.id.tv_add:
+                break;
+
+            case R.id.tv_minus:
+                break;
+
+            case R.id.btn_remove_product:
+                break;
+
+            case R.id.btn_confirm:
                 break;
         }
     }
@@ -221,106 +231,59 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initBottomLayout(View view) {
-        ll_shopcar = (LinearLayout) view.findViewById(R.id.ll_shopcar);
         bottomSheetLayout = (BottomSheetLayout) view.findViewById(R.id.bottomSheetLayout);
         tv_total_num = (TextView) view.findViewById(R.id.tv_total_num);
         tv_total_money = (TextView) view.findViewById(R.id.tv_total_money);
-        tv_car = (TextView) view.findViewById(R.id.tv_car);
-        ll_shopcar.setOnClickListener(this);
-        carList = new ArrayList<>();
-        tv_total_num.setVisibility(tv_total_num.getText().equals("0") ? View.INVISIBLE : View.VISIBLE);
+        tv_total_num.setText(String.valueOf("共 0 件"));
     }
 
     /**
-     * 显示底部购物车
+     * 显示底部产品数量添加
      */
-    private void showBottomSheet() {
-        bottomSheet = createBottomSheetView();
+    public void showBottomSheet(int section, int position) {
+        bottomSheet = createBottomSheetView(section, position);
         if (bottomSheetLayout.isSheetShowing()) {
             bottomSheetLayout.dismissSheet();
         } else {
-            if (carList.size() != 0) {
-                bottomSheetLayout.showWithSheetView(bottomSheet);
-            }
+            bottomSheetLayout.showWithSheetView(bottomSheet);
         }
     }
 
     /**
-     * 创建购物车view
+     * 创建底部view
      *
      * @return view
      */
-    private View createBottomSheetView() {
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_bottom_sheet,
+    private View createBottomSheetView(int section, int position) {
+        View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_add_num,
                 (ViewGroup) getWindow().getDecorView(), false);
-        MyListView myListView = (MyListView) view.findViewById(R.id.lv_product);
-        TextView tv_clear = (TextView) view.findViewById(R.id.clear);
-        tv_clear.setOnClickListener(this);
-        fromRightLVGetCarData();
-        shopCartAdapter = new ShopCartAdapter(this, carList);
-        myListView.setAdapter(shopCartAdapter);
+        TextView tv_product_name = (TextView) view.findViewById(R.id.tv_product_name);   //当前产品名称
+        TextView tv_check_photo = (TextView) view.findViewById(R.id.tv_check_photo);     //查看照片
+        TextView tv_stock_num = (TextView) view.findViewById(R.id.tv_stock_num);         //剩余数量
+        TextView tv_close_sheet = (TextView) view.findViewById(R.id.tv_close_sheet);     //关闭
+        TextView tv_minus = (TextView) view.findViewById(R.id.tv_minus);                 //“-”号
+        TextView tv_add = (TextView) view.findViewById(R.id.tv_add);                     //“+”号
+        EditText et_buy_num = (EditText) view.findViewById(R.id.et_buy_num);             //添加产品的数量
+        EditText et_price = (EditText) view.findViewById(R.id.et_price);                 //产品单价
+        EditText et_remark = (EditText) view.findViewById(R.id.et_remark);               //产品备注
+        Button btn_remove_product = (Button) view.findViewById(R.id.btn_remove_product); //删除此产品
+        Button btn_confirm = (Button) view.findViewById(R.id.btn_confirm);               //确认
+
+        tv_check_photo.setOnClickListener(this);
+        tv_close_sheet.setOnClickListener(this);
+        tv_add.setOnClickListener(this);
+        tv_minus.setOnClickListener(this);
+        btn_remove_product.setOnClickListener(this);
+        btn_confirm.setOnClickListener(this);
+
+        ProductBean pb = cateBeanList.get(section).getList().get(position);
+        tv_product_name.setText(pb.getProductName());
+        tv_stock_num.setText("库存" + pb.getStockItem() + "件；" + pb.getStockPackage() + "包");
         return view;
     }
 
     /**
-     * 从右面ListView中获得购物车ListView的数据
-     */
-    private void fromRightLVGetCarData() {
-        carList.clear();    //每次添加数据之前必须先把之前的clear，否则会出现重复情况
-        List<CategoryBean> cb = rightAdapter.getCateBeanList();
-        for (int i = 0; i < cb.size(); i++) {
-            List<ProductBean> pb = cb.get(i).getList();
-            for (int j = 0; j < pb.size(); j++) {
-                if (pb.get(j).getBuyNum() != 0) {
-                    carList.add(pb.get(j));
-                }
-            }
-        }
-    }
-
-    /**
-     * 当在购物车里面点击ListView中的add或者remove图标，
-     * 从购物车ListView中获得数据，
-     * 通知左边ListView和右边ListView刷新数据和UI，
-     * 同时购物车的价格和数量角标也要刷新
-     */
-    public void fromCarGetData() {
-        List<ProductBean> pbList = shopCartAdapter.getScBeanList();
-        if (pbList.size() == 0) {
-            bottomSheetLayout.dismissSheet();
-        }
-
-        //计算一件产品买了几个
-        for (int i = 0; i < pbList.size(); i++) {
-            ProductBean pb = pbList.get(i);
-            List<ProductBean> list = cateBeanList.get(pb.getSection()).getList();
-            for (int j = 0; j < list.size(); j++) {
-                if (pb.getProductName().equals(list.get(j).getProductName())) {
-                    list.set(j, pb);
-                    cateBeanList.get(pb.getSection()).setList(list);
-                }
-            }
-        }
-
-        //计算一共买了多少件产品（包含重复）
-        for (int i = 0; i < cateBeanList.size(); i++) {
-            int cateBuyNum = 0;
-            List<ProductBean> proBeanList = cateBeanList.get(i).getList();
-            for (int j = 0; j < proBeanList.size(); j++) {
-                cateBuyNum += proBeanList.get(j).getBuyNum();
-
-            }
-            cateBeanList.get(i).setBuyNum(cateBuyNum);
-        }
-
-        leftAdapter.setData(cateBeanList, true);
-        rightAdapter.setCateBeanList(cateBeanList, true);
-
-        refreshShopCarNum(cateBeanList);
-    }
-
-    /**
-     * 刷新下面购物车图标右上角的数量和价格
+     * 刷新下面图标数量和价格
      *
      * @param cbList cbList
      */
@@ -338,32 +301,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
         if (carBuyNum > 0) {
-            tv_total_num.setVisibility(View.VISIBLE);
-            tv_total_num.setText(String.valueOf(carBuyNum));
+            tv_total_num.setText(String.valueOf("共 " + carBuyNum + " 件"));
             tv_total_money.setText(String.valueOf("￥" + total_money));
         } else {
-            tv_total_num.setVisibility(View.INVISIBLE);
+            tv_total_num.setText(String.valueOf("共 0 件"));
             tv_total_money.setText(String.valueOf("￥0.00"));
         }
     }
 
-    /**
-     * 清空购物车(把实体类中的所有BuyNum的数量设置为0)
-     */
-    private void clearEmptyCar() {
-        int cbListSize = cateBeanList.size();
-        for (int i = 0; i < cbListSize; i++) {
-            cateBeanList.get(i).setBuyNum(0);
-            List<ProductBean> pbList = cateBeanList.get(i).getList();
-            for (int j = 0; j < pbList.size(); j++) {
-                pbList.get(j).setBuyNum(0);
-            }
-        }
-        leftAdapter.setData(cateBeanList, true);
-        rightAdapter.setCateBeanList(cateBeanList, true);
-        bottomSheetLayout.dismissSheet();
-        refreshShopCarNum(cateBeanList);
-    }
+//    /**
+//     * 清空购物车(把实体类中的所有BuyNum的数量设置为0)
+//     */
+//    private void clearEmptyCar() {
+//        int cbListSize = cateBeanList.size();
+//        for (int i = 0; i < cbListSize; i++) {
+//            cateBeanList.get(i).setBuyNum(0);
+//            List<ProductBean> pbList = cateBeanList.get(i).getList();
+//            for (int j = 0; j < pbList.size(); j++) {
+//                pbList.get(j).setBuyNum(0);
+//            }
+//        }
+//        leftAdapter.setData(cateBeanList, true);
+//        rightAdapter.setCateBeanList(cateBeanList, true);
+//        bottomSheetLayout.dismissSheet();
+//        refreshShopCarNum(cateBeanList);
+//    }
 
     //******************************** 动画 开始 ***********************************
 
@@ -377,9 +339,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ViewGroup anim_mask_layout = null;
         anim_mask_layout = createAnimLayout();
         anim_mask_layout.addView(v);//把动画小球添加到动画层
-        final View view = addViewToAnimLayout(anim_mask_layout, v, startLocation);
+        View view = addViewToAnimLayout(anim_mask_layout, v, startLocation);
         int[] endLocation = new int[2];// 存储动画结束位置的X、Y坐标
-        tv_car.getLocationInWindow(endLocation);
+        tv_total_num.getLocationInWindow(endLocation);
         // 计算位移
         int endX = 0 - startLocation[0] + 40;// 动画位移的X坐标
         int endY = endLocation[1] - startLocation[1];// 动画位移的y坐标
@@ -440,8 +402,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return animLayout;
     }
 
-    private View addViewToAnimLayout(final ViewGroup parent, final View view,
-                                     int[] location) {
+    private View addViewToAnimLayout(ViewGroup parent, View view, int[] location) {
         int x = location[0];
         int y = location[1];
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

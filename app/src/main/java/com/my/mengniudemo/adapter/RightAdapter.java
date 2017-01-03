@@ -13,7 +13,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.my.mengniudemo.MainActivity;
 import com.my.mengniudemo.R;
@@ -65,7 +64,7 @@ public class RightAdapter extends SectionedBaseAdapter {
 
     @Override
     public View getItemView(int section, int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (null == convertView) {
             convertView = LayoutInflater.from(context).inflate(R.layout.right_list_item, parent, false);
             holder = new ViewHolder(convertView);
@@ -110,7 +109,7 @@ public class RightAdapter extends SectionedBaseAdapter {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.ll_right_list:
-                    Toast.makeText(context, "" + cateBeanList.get(section).getList().get(position).getProductName(), Toast.LENGTH_SHORT).show();
+                    ((MainActivity) context).showBottomSheet(section, position);
                     break;
 
                 case R.id.iv_add_product:
@@ -219,9 +218,6 @@ public class RightAdapter extends SectionedBaseAdapter {
                 }
 
                 break;
-
-            default:
-                Log.e(TAG, "模式设置错误");
         }
         cb.getList().set(position, pb);     //设置本类中的数据
         cateBeanList.set(section, cb);      //设置本类中的数据
