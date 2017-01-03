@@ -10,4 +10,9 @@
     <string name="give_product">赠品</string>
     <string name="check_photo">查看图片</string>
     <string name="example_product">蒙牛特仑苏低脂纯牛奶250ml X 12包</string>
+    <string name="number_zh">数量</string>
+    <string name="price_zh">价格</string>
+    <string name="minus_symbol">—</string>
+    <string name="add_symbol">+</string>
+    <string name="item_zh">件</string>
 </resources>
