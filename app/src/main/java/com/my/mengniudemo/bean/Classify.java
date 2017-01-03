@@ -6,7 +6,7 @@ package com.my.mengniudemo.bean;
  * <p>
  * Created by YJH on 2016/12/28 11:35.
  */
-public class Classify implements MultiSeletedImp {
+public class Classify implements MultiSelectedImp {
     private String name;
     private boolean isSelected;     //是否选中
 
